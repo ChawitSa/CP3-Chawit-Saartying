@@ -5,3 +5,4 @@ for i in range(n):
     for f in range(2*i):
         print("*", end="")
     print("*")
+print("Bye Bye!!")
