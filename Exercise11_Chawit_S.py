@@ -6,3 +6,6 @@ for i in range(n):
         print("*", end="")
     print("*")
 print("Bye Bye!!")
+
+if "J" in "HeolJ":
+    print("Have")
