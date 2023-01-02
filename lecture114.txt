@@ -1,0 +1,7 @@
+from currency_converter import CurrencyConverter
+from datetime import date
+c = CurrencyConverter
+while True:
+    m = int(input("Money[EUR]: "))
+    y = int(input("Year: "))
+    print("Change",((c.convert(m, 'EUR', 'USD', date=date(y, 1, 1))/c.convert(m, 'EUR', 'USD', date=date(y-1, 1, 1)))-1)*100,"%")
