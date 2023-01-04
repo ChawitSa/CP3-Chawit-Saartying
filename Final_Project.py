@@ -144,7 +144,7 @@ LARGEFONT = ("Verdana", 35)
 
 
 shelfList = []
-def enterShelf ( shelfList, Shelf, box1, box2):
+def enterShelf ( shelfList, box1, box2):
     shelfList.append(Shelf(box1.get(), box2.get()))
     print(box1.get()+"\t"+type(box1.get()))
 
@@ -219,7 +219,7 @@ class Page2(Frame):
         box2.insert(0,"integer")
         box2.grid(row=4, column=0, padx=100)
 
-        button3 = Button(self, text="Enter", height=5, width=50, font=50, command=enterShelf(shelfList, Shelf(box1, box2)))
+        button3 = Button(self, text="Enter", height=5, width=50, font=50, command=enterShelf(shelfList, box1, box2))
         button3.grid(row=5, column=0, padx=100, pady=10)
 
 #===============Zone of GUI's Display===============
