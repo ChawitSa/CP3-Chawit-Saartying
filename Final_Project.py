@@ -56,10 +56,10 @@ class Book:
     __returnedDate = []
 
     def __init__(self):
-        self.__name = n
-        self.__no = no
-        self.__author = a
-        self.__category = c
+        self.__name
+        self.__no 
+        self.__author
+        self.__category
         self.statusUnavailable()
         self.database()
     def __init__(self, n:str, no:str, a:str, c:str):
@@ -71,7 +71,7 @@ class Book:
         self.database()
 
     def database(self):
-        db.reference('Book/'+self.__name).child(self.__no).update({
+        db.reference('Book/'+str(self.__name)).child(str(self.__no)).update({
                     "Author": self.__author,
                     "Category": self.__category,
                     "Status": self.__status,
@@ -140,6 +140,7 @@ from tkinter import *
 
 LARGEFONT = ("Verdana", 35)
 
+def enterShelf()
 
 
 
@@ -166,7 +167,9 @@ class TkApp(Tk):
         frame.tkraise()
 
 
-    
+
+#================Zone of GUI's LogIn================
+
 
 #================Zone of GUI's Page1================
 class Page1(Frame):
@@ -197,17 +200,23 @@ class Page2(Frame):
         label = ttk.Label(self, text="Add Shelf", font=LARGEFONT)
         label.grid(row=0, column=0, padx=335, pady=50)
 
-        label1 = Label(self, text="Welcome to Library Service System", height=1, width=50, font=50)
+        label1 = Label(self, text="Order of Shelf", height=1, width=50, font=50)
         label1.grid(row=1, column=0, padx=25)
-        box1 = Entry(self, )
+        box1 = Entry(self, justify=LEFT, width=50, font=30)
+        box1.insert(0,"integer")
         box1.grid(row=2, column=0, padx=100)
 
-        button2 = Button(self, text="Borrow", height=5, width=50, font=50, command=lambda:controller.showFrame(Page1))
-        button2.grid(row=3, column=0, padx=100, pady=10)
+        label2 = Label(self, text="at Row", height=1, width=50, font=50)
+        label2.grid(row=3, column=0, padx=25)
+        box2 = Entry(self, justify=LEFT, width=50, font=30)
+        box2.insert(0,"integer")
+        box2.grid(row=4, column=0, padx=100)
 
-        button3 = Button(self, text="Return", height=5, width=50, font=50, command=lambda:controller.showFrame(Page1))
-        button3.grid(row=4, column=0, padx=100, pady=10)
+        button3 = Button(self, text="Enter", height=5, width=50, font=50, command=lambda:controller.showFrame(Page1))
+        button3.grid(row=5, column=0, padx=100, pady=10)
 
-#===========Zone of GUI's Display===========
+#===============Zone of GUI's Display===============
 app = TkApp()
+shelf:list
+
 app.mainloop()
