@@ -47,28 +47,28 @@ class Person:
         return self.__contact
 
 class Book:
-    __name = "N/A"
-    __author = "N/A"
-    __category = "0000"
-    __status = "N/A"
-    __borrowedBy = []
-    __borrowedDate = []
-    __returnedDate = []
-
     def __init__(self):
-        self.__name
-        self.__no 
-        self.__author
-        self.__category
+        self.__name = "N/A"
+        self.__no = "0"
+        self.__author = "N/A"
+        self.__category = "0000"
+        self.__borrowedBy = []
+        self.__borrowedDate = []
+        self.__returnedDate = []
         self.statusUnavailable()
         self.database()
+
+    '''    
     def __init__(self, n:str, no:str, a:str, c:str):
         self.__name = n
         self.__no = no
         self.__author = a
         self.__category = c
+        self.__borrowedBy = []
+        self.__borrowedDate = []
+        self.__returnedDate = []
         self.statusUnavailable()
-        self.database()
+        self.database()'''
 
     def database(self):
         db.reference('Book/'+str(self.__name)).child(str(self.__no)).update({
@@ -108,16 +108,18 @@ class Book:
 
 
 class Shelf:
-    __no:int
-    __row:int
-    __book:Book
+    __no=-1
+    __row=-1
+    __book = Book()
 
-    def __init__(self, no:int, y:int, r:int):
+    def __init__(self, no:int, r:int):
         self.__no = no
         self.__row = r
+        self.__book = Book()
         self.database()
 
     def database(self):
+        print(self.__no)
         db.reference('Shelf/'+str(self.__no)).child(str(self.__row)).update({
                     self.__row:{"Book": self.__book}
         })
@@ -140,9 +142,11 @@ from tkinter import *
 
 LARGEFONT = ("Verdana", 35)
 
-def enterShelf()
 
-
+shelfList = []
+def enterShelf ( shelfList, Shelf, box1, box2):
+    shelfList.append(Shelf(box1.get(), box2.get()))
+    print(box1.get()+"\t"+type(box1.get()))
 
 #===========Zone of GUI's Page Controller===========
 class TkApp(Tk):
@@ -165,6 +169,9 @@ class TkApp(Tk):
     def showFrame(self, cont):
         frame = self.frames[cont]
         frame.tkraise()
+    
+    
+    
 
 
 
@@ -181,7 +188,7 @@ class Page1(Frame):
         label = ttk.Label(self, text="Welcome to Library Service System", font=LARGEFONT)
         label.grid(row=0, column=1, padx=25, pady=50)
 
-        button1 = Button(self, text="Data Manager", height=5, width=50, font=50, command=lambda:controller.showFrame(Page2))
+        button1 = Button(self, text="Database Manager", height=5, width=50, font=50, command=lambda:controller.showFrame(Page2))
         button1.grid(row=2, column=1, padx=100, pady=10)
 
         button2 = Button(self, text="Borrow", height=5, width=50, font=50, command=lambda:controller.showFrame(Page1))
@@ -212,11 +219,11 @@ class Page2(Frame):
         box2.insert(0,"integer")
         box2.grid(row=4, column=0, padx=100)
 
-        button3 = Button(self, text="Enter", height=5, width=50, font=50, command=lambda:controller.showFrame(Page1))
+        button3 = Button(self, text="Enter", height=5, width=50, font=50, command=enterShelf(shelfList, Shelf(box1, box2)))
         button3.grid(row=5, column=0, padx=100, pady=10)
 
 #===============Zone of GUI's Display===============
 app = TkApp()
-shelf:list
+shelf=[]
 
 app.mainloop()
