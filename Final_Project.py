@@ -112,13 +112,12 @@ class Shelf:
     def __init__(self, no:int, r:int):
         self.__no = no
         self.__row = r
-        self.__book = Book()
+        self.__book = "N/A"
         self.database()
 
     def database(self):
-        print(self.__no)
         db.reference('Shelf/'+str(self.__no)).child(str(self.__row)).update({
-                    self.__row: {"Book": self.__book}
+                    "Book": self.__book
         })
     def takeBookIn(self, book:Book):
         self.__book = book
@@ -128,6 +127,7 @@ class Shelf:
         self.__book = Book()
         self.database()
         #book.borrowBook() อย่าลืมเพิ่ม
+
     def deleteShelf(self):
         db.reference('Shelf/'+str(self.__no)).child(str(self.__row)).delete()
         del self
@@ -141,12 +141,13 @@ LARGEFONT = ("Verdana", 35)
 
 
 shelfList = []
-def enterShelf ( shelfList, box1, box2):
-    shelfList.append(Shelf(box1, box2))
-    print(box1.get()+"\t"+type(box1.get()))
+
 
 #===========Zone of GUI's Page Controller===========
+
+
 class TkApp(Tk):
+
     def __init__(self, *args, **kwargs):
         Tk.__init__(self, *args, **kwargs)
         container = Frame(self)
@@ -156,7 +157,7 @@ class TkApp(Tk):
 
         self.frames = {}
 
-        for F in (Page1,Page2):
+        for F in (Page1, Page2):
             frame = F(container, self)
             self.frames[F] = frame
             frame.grid(row=0, column=0, sticky="NESW")
@@ -166,10 +167,9 @@ class TkApp(Tk):
     def showFrame(self, cont):
         frame = self.frames[cont]
         frame.tkraise()
-    
-    
-    
 
+    def enterShelf(self, shelfList, box2_1, box2_2):
+        shelfList.append(Shelf(box2_1.get(), box2_2.get()))
 
 
 #================Zone of GUI's LogIn================
@@ -185,17 +185,21 @@ class Page1(Frame):
         label = ttk.Label(self, text="Welcome to Library Service System", font=LARGEFONT)
         label.grid(row=0, column=1, padx=25, pady=50)
 
-        button1 = Button(self, text="Database Manager", height=5, width=50, font=50, command=lambda:controller.showFrame(Page2))
-        button1.grid(row=2, column=1, padx=100, pady=10)
+        button1_1 = Button(self, text="Database Manager", height=5, width=50, font=50,
+                           command=lambda: controller.showFrame(Page2))
+        button1_1.grid(row=2, column=1, padx=100, pady=10)
 
-        button2 = Button(self, text="Borrow", height=5, width=50, font=50, command=lambda:controller.showFrame(Page1))
-        button2.grid(row=3, column=1, padx=100, pady=10)
+        button1_2 = Button(self, text="Borrow", height=5, width=50, font=50,
+                           command=lambda: controller.showFrame(Page1))
+        button1_2.grid(row=3, column=1, padx=100, pady=10)
 
-        button3 = Button(self, text="Return", height=5, width=50, font=50, command=lambda:controller.showFrame(Page1))
-        button3.grid(row=4, column=1, padx=100, pady=10)
+        button1_3 = Button(self, text="Return", height=5, width=50, font=50,
+                           command=lambda: controller.showFrame(Page1))
+        button1_3.grid(row=4, column=1, padx=100, pady=10)
 
 #================Zone of GUI's Page2================
 class Page2(Frame):
+
     def __init__(self, parent, controller):
         Frame.__init__(self, parent)
         self.winfo_toplevel().title("Library Service System")
@@ -204,20 +208,23 @@ class Page2(Frame):
         label = ttk.Label(self, text="Add Shelf", font=LARGEFONT)
         label.grid(row=0, column=0, padx=335, pady=50)
 
-        label1 = Label(self, text="Order of Shelf", height=1, width=50, font=50)
-        label1.grid(row=1, column=0, padx=25)
-        box1 = Entry(self, justify=LEFT, width=50, font=30)
-        box1.insert(0,"integer")
-        box1.grid(row=2, column=0, padx=100)
+        label2_1 = Label(self, text="Order of Shelf", height=1, width=50, font=50)
+        label2_1.grid(row=1, column=0, padx=25)
+        box2_1 = Entry(self, justify=LEFT, width=50, font=30)
+        box2_1.insert(0,"int")
+        box2_1.grid(row=2, column=0, padx=100)
 
-        label2 = Label(self, text="at Row", height=1, width=50, font=50)
-        label2.grid(row=3, column=0, padx=25)
-        box2 = Entry(self, justify=LEFT, width=50, font=30)
-        box2.insert(0,"integer")
-        box2.grid(row=4, column=0, padx=100)
+        label2_2 = Label(self, text="at Row", height=1, width=50, font=50)
+        label2_2.grid(row=3, column=0, padx=25)
+        box2_2 = Entry(self, justify=LEFT, width=50, font=30)
+        box2_2.insert(0, "int")
+        box2_2.grid(row=4, column=0, padx=100)
 
-        button3 = Button(self, text="Enter", height=5, width=50, font=50, command=enterShelf(shelfList, str(box1.get()), str(box2.get())))
-        button3.grid(row=5, column=0, padx=100, pady=10)
+        button2_3 = Button(self, text="Enter", height=5, width=50, font=50,
+                           command=lambda: controller.enterShelf(shelfList, box2_1, box2_2))
+        button2_3.grid(row=5, column=0, padx=100, pady=10)
+        #button2_3.bind("<Button-3>", controller.enterShelf(shelfList, box2_1, box2_2))
+
 
 #===============Zone of GUI's Display===============
 app = TkApp()
