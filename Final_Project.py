@@ -98,7 +98,7 @@ class Book:
         self.database()
     def returnBook(self, d:int, m:int, y:int):
         self.__returnedDate.append(date(y, m, d))
-        self.statusAvailable
+        self.statusAvailable()
         self.database()
     def getStatus(self):
         return self.__status
@@ -108,9 +108,6 @@ class Book:
 
 
 class Shelf:
-    __no=-1
-    __row=-1
-    __book = Book()
 
     def __init__(self, no:int, r:int):
         self.__no = no
@@ -121,7 +118,7 @@ class Shelf:
     def database(self):
         print(self.__no)
         db.reference('Shelf/'+str(self.__no)).child(str(self.__row)).update({
-                    self.__row:{"Book": self.__book}
+                    self.__row: {"Book": self.__book}
         })
     def takeBookIn(self, book:Book):
         self.__book = book
@@ -145,7 +142,7 @@ LARGEFONT = ("Verdana", 35)
 
 shelfList = []
 def enterShelf ( shelfList, box1, box2):
-    shelfList.append(Shelf(box1.get(), box2.get()))
+    shelfList.append(Shelf(box1, box2))
     print(box1.get()+"\t"+type(box1.get()))
 
 #===========Zone of GUI's Page Controller===========
@@ -219,11 +216,10 @@ class Page2(Frame):
         box2.insert(0,"integer")
         box2.grid(row=4, column=0, padx=100)
 
-        button3 = Button(self, text="Enter", height=5, width=50, font=50, command=enterShelf(shelfList, box1, box2))
+        button3 = Button(self, text="Enter", height=5, width=50, font=50, command=enterShelf(shelfList, str(box1.get()), str(box2.get())))
         button3.grid(row=5, column=0, padx=100, pady=10)
 
 #===============Zone of GUI's Display===============
 app = TkApp()
-shelf=[]
 
 app.mainloop()
